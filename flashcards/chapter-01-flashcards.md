@@ -1,0 +1,16 @@
+## Chapter 1: NVIDIA AI Ecosystem and Software Stack — Flashcards
+
+| # | Front (Question) | Back (Answer) |
+|---|-----------------|---------------|
+| 1 | CUDA vs cuDNN vs TensorRT: Which for parallel computing foundation? | CUDA. It's the parallel computing platform and programming model. cuDNN and TensorRT build on top of CUDA. Exam tip: CUDA = foundation layer, cuDNN = training primitives, TensorRT = inference optimizer. |
+| 2 | When to use cuDNN vs TensorRT? | cuDNN: Training neural networks (provides GPU-accelerated primitives: convolution, pooling, normalization). TensorRT: Inference optimization (layer fusion, precision calibration, kernel tuning). Exam tip: Training = cuDNN, Inference = TensorRT. |
+| 3 | NGC catalog: What are the 4 main artifact types? | 1) Containers (framework, inference, data science), 2) Pre-trained models (.pth, .onnx, etc.), 3) Helm charts (K8s deployment), 4) SDKs/resources. Exam tip: Containers ≠ models. Models are separate downloadable artifacts. |
+| 4 | NVIDIA AI Enterprise: What differentiates it from free NGC containers? | Enterprise support with SLAs, security patches <30 days, certified configurations (VMware, Red Hat, etc.), access to NVIDIA experts, long-term support versions. Exam tip: Free NGC = community support only, no SLA. |
+| 5 | RAPIDS: Which libraries replace pandas and scikit-learn? | cuDF replaces pandas (GPU dataframes), cuML replaces scikit-learn (GPU ML). Also: cuGraph (graphs), cuSignal (signal processing). Exam tip: RAPIDS = data science acceleration, not deep learning. |
+| 6 | Triton Inference Server: Supported protocols? | HTTP/REST and gRPC. Both support inference requests, health checks, metadata queries. Exam tip: Dynamic batching works with both protocols—it's server-side, not protocol-dependent. |
+| 7 | TensorRT optimization techniques (name 3) | 1) Layer fusion (combine ops), 2) Precision calibration (FP16/INT8), 3) Kernel auto-tuning (select fastest implementation). Exam tip: TensorRT optimizes trained models, doesn't train them. |
+| 8 | CUDA programming model: Define 'kernel' | A function that runs on GPU, executed by many threads in parallel. Launched with <<<grid, block>>> syntax. Exam tip: Kernel ≠ OS kernel. It's a parallel function invocation. |
+| 9 | cuDNN: What does it accelerate? (Specific operations) | Convolution, pooling, normalization, activation functions, RNN/LSTM operations, batch normalization. Exam tip: cuDNN = building blocks for training neural networks, used by PyTorch/TensorFlow internally. |
+| 10 | NGC catalog: Public vs Private registry difference? | Public: Free, open to all, community support. Private: Organization-specific, stores custom models/containers, requires NGC account with org setup. Exam tip: Public containers have no enterprise SLA. |
+| 11 | Triton Inference Server: What is 'model ensemble'? | Pipeline of multiple models executed in sequence or parallel, defined in config.pbtxt. E.g., preprocessing → model → postprocessing. Exam tip: Ensemble = multi-model inference pipeline, single request endpoint. |
+| 12 | NVIDIA AI Enterprise: Which hypervisors/orchestrators are certified? | VMware vSphere, Red Hat OpenShift, Kubernetes, Ubuntu/RHEL bare metal. Exam tip: Certification = tested configs, guaranteed support, joint VMware/Red Hat support tickets. |

@@ -1,0 +1,16 @@
+## Chapter 6: Kubernetes and Slurm Orchestration for AI Workloads — Flashcards
+
+| # | Front (Question) | Back (Answer) |
+|---|-----------------|---------------|
+| 1 | Kubernetes vs Slurm: When to use each for AI workloads? | Kubernetes: containerized inference services, MLOps pipelines, microservices needing auto-scaling/load balancing. Slurm: HPC batch training jobs, multi-node MPI workloads, traditional GPU clusters with complex scheduling policies. Exam tip: K8s = services, Slurm = batch. |
+| 2 | Kubernetes GPU resource request syntax for 4 GPUs? | resources:   requests:     nvidia.com/gpu: 4   limits:     nvidia.com/gpu: 4 Exam tip: requests MUST equal limits for GPUs (not overcommittable). Use nvidia.com/gpu not 'gpu'. |
+| 3 | Slurm directive to request 2 A100 GPUs per node across 4 nodes? | #SBATCH --nodes=4 #SBATCH --gres=gpu:a100:2 Exam tip: --gres=gpu:<type>:<count> is per-node. Total GPUs = nodes × count. Use --ntasks-per-node=1 for distributed training. |
+| 4 | Kubernetes podAntiAffinity topologyKey to spread pods across nodes? | topologyKey: kubernetes.io/hostname Exam tip: hostname = unique per node. Use with podAntiAffinity to prevent replicas on same node. Zone/region for cross-AZ spread. |
+| 5 | What does Slurm gres stand for and what's it used for? | Generic Resources. Used to request consumable resources like GPUs, FPGAs, licenses. Format: --gres=<resource>:<type>:<count>. Exam tip: gres=gpu:4 requests 4 GPUs per node, not total. |
+| 6 | NVIDIA Base Command Manager (BCM) primary use case? | On-prem DGX cluster management: user/group management, AD/LDAP integration, web UI for job submission, monitoring, resource policies. Works with Slurm underneath. Exam tip: BCM = on-prem management layer. |
+| 7 | Kubernetes GPU device plugin: what does it do? | DaemonSet that discovers GPUs on nodes, advertises nvidia.com/gpu extended resource to kubelet, enforces device allocation to containers. Exam tip: Without device plugin, Kubernetes can't schedule GPU pods. |
+| 8 | How to ensure Kubernetes pod gets 8 GPUs on a single node? | Set resources.requests.nvidia.com/gpu: 8 AND use nodeSelector for nodes with 8+ GPUs (e.g., nvidia.com/gpu.count: 8). Exam tip: requests alone doesn't guarantee single node if cluster has partial availability. |
+| 9 | Slurm --gpus vs --gres=gpu difference? | --gpus=<count> is total GPUs across job (newer syntax). --gres=gpu:<count> is per-node. Exam tip: --gres more flexible for per-node control and GPU types (--gres=gpu:a100:2). |
+| 10 | Base Command Platform (BCP) vs Base Command Manager (BCM)? | BCP = unified job scheduling/monitoring platform (SaaS or on-prem) supporting Slurm/K8s backends, dataset management. BCM = on-prem cluster manager for DGX systems. Exam tip: BCP is superset, BCM is DGX-focused. |
+| 11 | Kubernetes nodeAffinity vs nodeSelector for GPU node selection? | nodeSelector: simple key-value match (e.g., gpu-type: a100). nodeAffinity: complex logic with required/preferred, operators (In, NotIn). Exam tip: Use nodeSelector for simple cases, nodeAffinity for OR/NOT logic. |
+| 12 | Can Kubernetes overcommit GPUs (requests < limits)? | NO. GPUs are extended resources, not overcommittable. requests MUST equal limits. Kubernetes treats GPUs as whole-unit devices. Exam tip: Setting limits > requests for GPUs will cause validation error or unexpected behavior. |
